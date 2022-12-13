@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block nav %}
+    <li>
+    <a href="{% url 'webapp:create'%}"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+
+</svg></a>
+    </li>
+    <li>
+    {% include "partial/search.html" %}
+    </li>
+{% endblock %}
+{% block content %}
+
+    <h1 style="text-align: center">Online Shop</h1>
+    <div class="row">
+      {% for product in products %}
+{#          {% if product.remain > 0 %}#}
+              <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+
+</svg>{{ product.price }}</p>
+                    <p class="card-text">Category: {{ product.category }}</p>
+                    <p class="card-text">Remain: {{ product.remain }}</p>
+
+              <a href="{% url 'webapp:update' product.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+
+</svg></a>
+                    <a href="{% url 'webapp:delete' product.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+
+</svg></a>
+                    <a href="{% url 'webapp:product_view' product.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+
+</svg></a>
+                    {% include 'partial/cart_add_form.html' %}
+{#          {% endif %}#}
+
+                </div>
+            </div>
+          </div>
+      {% endfor %}
+    {% if is_paginated %}
+   {% include 'partial/pagination.html' %}
+{% endif %}
+    </div>
+
+{% endblock %}
